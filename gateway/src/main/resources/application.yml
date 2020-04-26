@@ -1,0 +1,59 @@
+spring:
+  application:
+    name: gateway
+  cloud:
+    nacos:
+      discovery:
+        ip: 127.0.0.1
+        enabled: true
+        server-addr: http://[NACOS-SERVER-ADDR]:8848
+    loadbalancer:
+      retry:
+        enabled: true
+
+server:
+  port: 7000
+
+zuul:
+  sensitiveHeaders: Cookie,Set-Cookie
+  ribbon:
+    eager-load:
+      enabled: true
+  host:
+    connect-timeout-millis: 20000
+    socket-timeout-millis: 60000
+#  解决登录成功不跳转oauth路由端点问题
+  add-host-header: true
+  routes:
+    uaa-server:
+      path: /uaa/**
+      serviceId: uaa-server
+#      url: http://127.0.0.1:18000/uaa
+      stripPrefix: false
+    provider-service:
+      path: /provider/**
+      serviceId: provider-service
+#      url: http://127.0.0.1:8000/provider
+      stripPrefix: false
+
+logging:
+  level:
+    com.example.gateway: debug
+
+auth-server-addr: http://127.0.0.1:18000/uaa
+security:
+  oauth2:
+#    与oauth_client_details表中web_server_redirect_uri对应
+#    sso:
+#      login-path: /login
+    client:
+      client-id: client
+      client-secret: secret
+      user-authorization-uri: ${auth-server-addr}/oauth/authorize
+      access-token-uri: ${auth-server-addr}/oauth/token
+    resource:
+      user-info-uri: ${auth-server-addr}/user/me
+      token-info-uri: ${auth-server-addr}/oauth/check_token
+#      prefer-token-info: false
+      jwt:
+        key-uri: ${auth-server-addr}/oauth/token_key

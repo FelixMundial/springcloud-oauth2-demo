@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.uaa.dao.TblUserDao">
+  <resultMap id="BaseResultMap" type="com.example.commons.domain.TblUser">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="notes" jdbcType="VARCHAR" property="notes" />
+    <result column="creation_time" jdbcType="TIMESTAMP" property="creationTime" />
+    <result column="lastupdate_time" jdbcType="TIMESTAMP" property="lastupdateTime" />
+  </resultMap>
+</mapper>

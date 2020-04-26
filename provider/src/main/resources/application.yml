@@ -1,0 +1,35 @@
+spring:
+  application:
+    name: provider-service
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/security?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC&useSSL=false
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: root
+  cloud:
+    nacos:
+      discovery:
+        ip: 127.0.0.1
+        enabled: true
+        server-addr: http://[NACOS-SERVER-ADDR]:8848
+
+server:
+  port: 8000
+  servlet:
+    context-path: /provider
+
+logging:
+  level:
+    com.example.provider: debug
+
+auth-server-addr: http://127.0.0.1:18000/uaa
+security:
+  oauth2:
+    client:
+      client-id: client
+      client-secret: secret
+      user-authorization-uri: ${auth-server-addr}/oauth/authorize
+      access-token-uri: ${auth-server-addr}/oauth/token
+    resource:
+      jwt:
+        key-uri: ${auth-server-addr}/oauth/token_key
